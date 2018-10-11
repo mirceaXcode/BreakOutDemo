@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -16,6 +16,10 @@
 		084A787A216E842200900CB0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 084A7879216E842200900CB0 /* Assets.xcassets */; };
 		084A787D216E842200900CB0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 084A787B216E842200900CB0 /* LaunchScreen.storyboard */; };
 		084A7880216E842200900CB0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 084A787F216E842200900CB0 /* main.m */; };
+		084A7889216E868400900CB0 /* GameOver.sks in Resources */ = {isa = PBXBuildFile; fileRef = 084A7888216E868400900CB0 /* GameOver.sks */; };
+		084A788B216E869F00900CB0 /* GameStart.sks in Resources */ = {isa = PBXBuildFile; fileRef = 084A788A216E869F00900CB0 /* GameStart.sks */; };
+		084A788E216E873E00900CB0 /* GameStart.m in Sources */ = {isa = PBXBuildFile; fileRef = 084A788D216E873E00900CB0 /* GameStart.m */; };
+		084A7891216E875600900CB0 /* GameOver.m in Sources */ = {isa = PBXBuildFile; fileRef = 084A7890216E875600900CB0 /* GameOver.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +37,12 @@
 		084A787C216E842200900CB0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		084A787E216E842200900CB0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		084A787F216E842200900CB0 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		084A7888216E868400900CB0 /* GameOver.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameOver.sks; sourceTree = "<group>"; };
+		084A788A216E869F00900CB0 /* GameStart.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameStart.sks; sourceTree = "<group>"; };
+		084A788C216E873E00900CB0 /* GameStart.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameStart.h; sourceTree = "<group>"; };
+		084A788D216E873E00900CB0 /* GameStart.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GameStart.m; sourceTree = "<group>"; };
+		084A788F216E875600900CB0 /* GameOver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameOver.h; sourceTree = "<group>"; };
+		084A7890216E875600900CB0 /* GameOver.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GameOver.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,12 +77,18 @@
 			children = (
 				084A7869216E842200900CB0 /* AppDelegate.h */,
 				084A786A216E842200900CB0 /* AppDelegate.m */,
-				084A786C216E842200900CB0 /* GameScene.sks */,
 				084A786E216E842200900CB0 /* Actions.sks */,
-				084A7870216E842200900CB0 /* GameScene.h */,
-				084A7871216E842200900CB0 /* GameScene.m */,
 				084A7873216E842200900CB0 /* GameViewController.h */,
 				084A7874216E842200900CB0 /* GameViewController.m */,
+				084A788A216E869F00900CB0 /* GameStart.sks */,
+				084A788C216E873E00900CB0 /* GameStart.h */,
+				084A788D216E873E00900CB0 /* GameStart.m */,
+				084A786C216E842200900CB0 /* GameScene.sks */,
+				084A7870216E842200900CB0 /* GameScene.h */,
+				084A7871216E842200900CB0 /* GameScene.m */,
+				084A7888216E868400900CB0 /* GameOver.sks */,
+				084A788F216E875600900CB0 /* GameOver.h */,
+				084A7890216E875600900CB0 /* GameOver.m */,
 				084A7876216E842200900CB0 /* Main.storyboard */,
 				084A7879216E842200900CB0 /* Assets.xcassets */,
 				084A787B216E842200900CB0 /* LaunchScreen.storyboard */,
@@ -117,7 +133,7 @@
 				};
 			};
 			buildConfigurationList = 084A7861216E842200900CB0 /* Build configuration list for PBXProject "BreakOutDemo" */;
-			compatibilityVersion = "Xcode 9.3";
+			compatibilityVersion = "Xcode 10.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -139,7 +155,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				084A788B216E869F00900CB0 /* GameStart.sks in Resources */,
 				084A7878216E842200900CB0 /* Main.storyboard in Resources */,
+				084A7889216E868400900CB0 /* GameOver.sks in Resources */,
 				084A786D216E842200900CB0 /* GameScene.sks in Resources */,
 				084A787A216E842200900CB0 /* Assets.xcassets in Resources */,
 				084A787D216E842200900CB0 /* LaunchScreen.storyboard in Resources */,
@@ -154,8 +172,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				084A788E216E873E00900CB0 /* GameStart.m in Sources */,
 				084A7872216E842200900CB0 /* GameScene.m in Sources */,
 				084A7875216E842200900CB0 /* GameViewController.m in Sources */,
+				084A7891216E875600900CB0 /* GameOver.m in Sources */,
 				084A7880216E842200900CB0 /* main.m in Sources */,
 				084A786B216E842200900CB0 /* AppDelegate.m in Sources */,
 			);

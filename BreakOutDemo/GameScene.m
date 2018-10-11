@@ -7,76 +7,80 @@
 //
 
 #import "GameScene.h"
+#import "GameOver.h"
 
-@implementation GameScene {
-    SKShapeNode *_spinnyNode;
-    SKLabelNode *_label;
-}
+@implementation GameScene
 
 - (void)didMoveToView:(SKView *)view {
-    // Setup your scene here
     
-    // Get label node from scene and store it for use later
-    _label = (SKLabelNode *)[self childNodeWithName:@"//helloLabel"];
+    self.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:self.frame];
     
-    _label.alpha = 0.0;
-    [_label runAction:[SKAction fadeInWithDuration:2.0]];
+    SKSpriteNode *ball1 = [SKSpriteNode spriteNodeWithImageNamed:@"blueball.png"];
+    ball1.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:ball1.size.width/2];
+    ball1.physicsBody.dynamic = YES;
+    ball1.position = CGPointMake(150, self.size.height/2);
+    ball1.physicsBody.friction = 0.0;
+    ball1.physicsBody.restitution = 1.0;
+    ball1.physicsBody.linearDamping = 0.0;
+    ball1.physicsBody.angularDamping = 0.0;
+    ball1.physicsBody.allowsRotation = NO;
+    ball1.physicsBody.mass = 1.0;
+    ball1.physicsBody.velocity = CGVectorMake(200.0, 200.0); // initial velocity
     
-    CGFloat w = (self.size.width + self.size.height) * 0.05;
+    SKSpriteNode *ball2 = [SKSpriteNode spriteNodeWithImageNamed:@"blueball.png"];
+    ball2.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:ball1.size.width/2];
+    ball2.physicsBody.dynamic = YES;
+    ball2.position = CGPointMake(300, self.size.height/2);
+    ball2.physicsBody.friction = 0.0;
+    ball2.physicsBody.restitution = 1.0;
+    ball2.physicsBody.linearDamping = 0.0;
+    ball2.physicsBody.angularDamping = 0.0;
+    ball2.physicsBody.allowsRotation = NO;
+    ball2.physicsBody.mass = 1.0;
+    ball2.physicsBody.velocity = CGVectorMake(200.0, 0.0); // initial velocity
     
-    // Create shape node to use during mouse interaction
-    _spinnyNode = [SKShapeNode shapeNodeWithRectOfSize:CGSizeMake(w, w) cornerRadius:w * 0.3];
-    _spinnyNode.lineWidth = 2.5;
+    [self addChild:ball1];
+    [self addChild:ball2];
     
-    [_spinnyNode runAction:[SKAction repeatActionForever:[SKAction rotateByAngle:M_PI duration:1]]];
-    [_spinnyNode runAction:[SKAction sequence:@[
-                                                [SKAction waitForDuration:0.5],
-                                                [SKAction fadeOutWithDuration:0.5],
-                                                [SKAction removeFromParent],
-                                                ]]];
-}
-
-
-- (void)touchDownAtPoint:(CGPoint)pos {
-    SKShapeNode *n = [_spinnyNode copy];
-    n.position = pos;
-    n.strokeColor = [SKColor greenColor];
-    [self addChild:n];
-}
-
-- (void)touchMovedToPoint:(CGPoint)pos {
-    SKShapeNode *n = [_spinnyNode copy];
-    n.position = pos;
-    n.strokeColor = [SKColor blueColor];
-    [self addChild:n];
-}
-
-- (void)touchUpAtPoint:(CGPoint)pos {
-    SKShapeNode *n = [_spinnyNode copy];
-    n.position = pos;
-    n.strokeColor = [SKColor redColor];
-    [self addChild:n];
+    CGPoint ball1Anchor = CGPointMake(ball1.position.x, ball1.position.y);
+    CGPoint ball2Anchor = CGPointMake(ball2.position.x, ball2.position.y);
+    
+    SKPhysicsJointSpring *joint = [SKPhysicsJointSpring jointWithBodyA:ball1.physicsBody bodyB:ball2.physicsBody anchorA:ball1Anchor anchorB:ball2Anchor];
+    
+    joint.damping = 0.0;
+    joint.frequency = 1.5;
+    
+    [self.scene.physicsWorld addJoint:joint];
+    
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    // Run 'Pulse' action from 'Actions.sks'
-    [_label runAction:[SKAction actionNamed:@"Pulse"] withKey:@"fadeInOut"];
     
-    for (UITouch *t in touches) {[self touchDownAtPoint:[t locationInNode:self]];}
+    if(touches){
+        // Create and configure the scene
+        GameOver *scene = [GameOver nodeWithFileNamed:@"GameOver"];
+        
+        // Set the scale mode to scale to fit the window
+        scene.scaleMode = SKSceneScaleModeAspectFit;
+        
+        
+        SKView *skView = (SKView *)self.view;
+        
+        // Present the scene
+        [skView presentScene:scene];
+    }
 }
+
+
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event{
-    for (UITouch *t in touches) {[self touchMovedToPoint:[t locationInNode:self]];}
 }
+
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-    for (UITouch *t in touches) {[self touchUpAtPoint:[t locationInNode:self]];}
 }
+    
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
-    for (UITouch *t in touches) {[self touchUpAtPoint:[t locationInNode:self]];}
 }
 
 
--(void)update:(CFTimeInterval)currentTime {
-    // Called before each frame is rendered
-}
 
 @end
