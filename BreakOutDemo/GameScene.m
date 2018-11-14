@@ -52,7 +52,7 @@ static const uint32_t category_ball      = 0x1 << 0; //0x00000000000000000000000
     ball1.physicsBody.angularDamping = 0.0;
     ball1.physicsBody.allowsRotation = NO;
     ball1.physicsBody.mass = 1.0;
-    ball1.physicsBody.velocity = CGVectorMake(300.0, 300.0); // initial velocity
+    ball1.physicsBody.velocity = CGVectorMake(400.0, 400.0); // initial velocity
     ball1.physicsBody.affectedByGravity = NO;
     ball1.physicsBody.categoryBitMask = category_ball;
     ball1.physicsBody.collisionBitMask = category_fence | category_ball | category_block | category_paddle;
@@ -90,7 +90,7 @@ static const uint32_t category_ball      = 0x1 << 0; //0x00000000000000000000000
     ball2.physicsBody.contactTestBitMask = category_fence | category_block;
     ball2.physicsBody.usesPreciseCollisionDetection = YES;
     
-    [self addChild:ball2];
+    //[self addChild:ball2];
     
     
     SKSpriteNode *paddle = [SKSpriteNode spriteNodeWithImageNamed:@"paddle.png"];
@@ -114,16 +114,17 @@ static const uint32_t category_ball      = 0x1 << 0; //0x00000000000000000000000
     
     [self addChild:paddle];
     
-    CGPoint ball1Anchor = CGPointMake(ball1.position.x, ball1.position.y);
-    CGPoint ball2Anchor = CGPointMake(ball2.position.x, ball2.position.y);
+//    CGPoint ball1Anchor = CGPointMake(ball1.position.x, ball1.position.y);
+//    CGPoint ball2Anchor = CGPointMake(ball2.position.x, ball2.position.y);
+//
+//    SKPhysicsJointSpring *joint = [SKPhysicsJointSpring jointWithBodyA:ball1.physicsBody bodyB:ball2.physicsBody anchorA:ball1Anchor anchorB:ball2Anchor];
+//
+//    joint.damping = 0.0;
+//    joint.frequency = 1.5;
+//
+//    [self.scene.physicsWorld addJoint:joint];
     
-    SKPhysicsJointSpring *joint = [SKPhysicsJointSpring jointWithBodyA:ball1.physicsBody bodyB:ball2.physicsBody anchorA:ball1Anchor anchorB:ball2Anchor];
-    
-    joint.damping = 0.0;
-    joint.frequency = 1.5;
-    
-    [self.scene.physicsWorld addJoint:joint];
-    
+    // Adding the texture to represents the blocks instead of a picture
     self.blockFrames = [NSMutableArray array];
     
     SKTextureAtlas *blockAnimation = [SKTextureAtlas atlasNamed:@"block.atlas"];
@@ -411,32 +412,34 @@ static const uint32_t category_ball      = 0x1 << 0; //0x00000000000000000000000
 
 // Update function is called at every frame
 -(void)update:(NSTimeInterval)currentTime{
-    
-    static const int kMaxSpeed = 700;
-    static const int kMinSpeed = 400;
-    
+
+    static const int kMaxSpeed = 400;
+    static const int kMinSpeed = 200;
+
     //Adjust the linear dumping id the call starts moving a little too dast or slow
     SKNode *ball1 = [self childNodeWithName:@"Ball1"];
-    SKNode *ball2 = [self childNodeWithName:@"Ball2"];
-    
+    //SKNode *ball2 = [self childNodeWithName:@"Ball2"];
+
     //float speedball1 = sqrt(ball1.physicsBody.velocity.dx*ball1.physicsBody.velocity.dx + ball1.physicsBody.velocity.dy*ball1.physicsBody.velocity.dy);
-    
-    float dx = (ball1.physicsBody.velocity.dx + ball2.physicsBody.velocity.dx)/2;
-    float dy = (ball1.physicsBody.velocity.dy + ball2.physicsBody.velocity.dy)/2;
+
+//    float dx = (ball1.physicsBody.velocity.dx + ball2.physicsBody.velocity.dx)/2;
+//    float dy = (ball1.physicsBody.velocity.dy + ball2.physicsBody.velocity.dy)/2;
+    float dx = ball1.physicsBody.velocity.dx/2;
+    float dy = ball1.physicsBody.velocity.dy/2;
     float speed = sqrt(dx*dx+dy*dy);
-    
+
     //if ((speedball1 > kMaxSpeed) || (speed > kMaxSpeed)) {
     if (speed > kMaxSpeed) {
         ball1.physicsBody.linearDamping += 0.1f;
-        ball2.physicsBody.linearDamping += 0.1f;
+       // ball2.physicsBody.linearDamping += 0.1f;
     //} else if ((speedball1 < kMinSpeed) || (speed < kMinSpeed)) {
     } else if (speed < kMinSpeed) {
         ball1.physicsBody.linearDamping -= 0.1f;
-        ball2.physicsBody.linearDamping -= 0.1f;
+        //ball2.physicsBody.linearDamping -= 0.1f;
     } else {
         ball1.physicsBody.linearDamping += 0.0f;
-        ball2.physicsBody.linearDamping += 0.0f;
+        //ball2.physicsBody.linearDamping += 0.0f;
     }
-    
+
 }
 @end
